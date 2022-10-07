@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Calculator.WpfApp.ViewModels;
 
-namespace Kalkulator
+namespace Calculator
 {
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
@@ -23,31 +24,7 @@ namespace Kalkulator
         public MainWindow()
         {
             InitializeComponent();
-        }
-        private void percent_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("Percent");
-        }
-        private void ceButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void clearButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void backspaceButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void sqrtButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void oneButton_Click_1(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("one");
+            DataContext = new MainViewModel();
         }
     }
 }
