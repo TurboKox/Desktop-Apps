@@ -1,0 +1,34 @@
+<Window x:Class="RGB.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RGB"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="350">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+
+        <Label Name="RedLabel" Grid.Row="0" Content="Red: 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60px"></Label>
+        <CheckBox Grid.Row="0" Name="RedCheck" Checked="RedCheck_Checked" Unchecked="RedCheck_Unchecked"></CheckBox>
+        <Slider Name="RedSlider" Grid.Row="1" Margin="20px" Minimum="0" Maximum="255" ValueChanged="RedSlider_ValueChanged"></Slider>
+        <Label Name="GreenLabel" Grid.Row="2" Content="Green: 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60px"></Label>
+        <CheckBox Grid.Row="2" Name="GreenCheck" Checked="GreenCheck_Checked" Unchecked="GreenCheck_Unchecked"></CheckBox>
+        <Slider Name="GreenSlider" Grid.Row="3" Value="0" Margin="20px" Minimum="0" Maximum="255" ValueChanged="GreenSlider_ValueChanged"></Slider>
+        <Label Name="BlueLabel" Grid.Row="4" Content="Blue: 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="60px"></Label>
+        <CheckBox Grid.Row="4" Name="BlueCheck" Checked="BlueCheck_Checked" Unchecked="BlueCheck_Unchecked"></CheckBox>
+        <Slider Name="BlueSlider" Grid.Row="5" Value="0" Margin="20px" Minimum="0" Maximum="255" ValueChanged="BlueSlider_ValueChanged"></Slider>
+        <Button Name="ColorButton" Grid.Row="6" Margin="20px" FontSize="30px" Background="Black"></Button>
+    </Grid>
+</Window>
