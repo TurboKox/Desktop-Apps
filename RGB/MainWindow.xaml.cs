@@ -15,13 +15,8 @@ using System.Windows.Shapes;
 
 namespace RGB
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        private byte red, green, blue, redBuffer, greenBuffer, blueBuffer;
-        SolidColorBrush bg = new SolidColorBrush();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,69 +24,36 @@ namespace RGB
 
         //*********************************************************
 
-        private void ClearValue(ref byte color, ref byte buffer, ref Slider slider, ref SolidColorBrush bg)
-        {
-            buffer = color;
-            slider.Value = 0;
-            ColorButton.Background = bg;
-            slider.IsEnabled = false;
-            RedLabel.Content = RedLabel.Name.Substring(0, RedLabel.Name.Length - 5) + ": 0";
-        }
-
-        private void Uncheck(ref byte buffer, ref Slider slider, ref SolidColorBrush bg, Label label)
-        {
-            slider.IsEnabled = true;
-            slider.Value = buffer;
-            ColorButton.Background = bg;
-            RedLabel.Content = RedLabel.Name.Substring(0, label.Name.Length - 5) + ": " + redBuffer;
-        }
-
-        private void ChangeValue(ref object sender, ref Label label, ref byte color)
-        {
-            int N = (int)((Slider)sender).Value;
-            label.Content = "Red: " + N;
-            color = (byte)N;
-            bg.Color = Color.FromArgb(255, red, green, blue);
-            ColorButton.Background = bg;
-        }
-
-        //*********************************************************
-
         private void RedCheck_Checked(object sender, RoutedEventArgs e)
         {
-            bg.Color = Color.FromArgb(255, 0, green, blue);
-            ClearValue(ref red, ref redBuffer, ref RedSlider, ref bg);
+            ClearValue(ref redBuffer, ref red, ref RedSlider, ref bg, ref RedLabel);
         }
 
         private void RedCheck_Unchecked(object sender, RoutedEventArgs e)
         {
-            bg.Color = Color.FromArgb(255, redBuffer, green, blue);
-            Uncheck(ref redBuffer, ref RedSlider, ref bg);
+            Uncheck(ref redBuffer, ref red, ref RedSlider, ref bg, ref RedLabel);
         }
 
         private void GreenCheck_Checked(object sender, RoutedEventArgs e)
         {
-            bg.Color = Color.FromArgb(255, 0, green, blue);
-            ClearValue(ref green, ref greenBuffer, ref GreenSlider, ref bg);
+            ClearValue(ref greenBuffer, ref green, ref GreenSlider, ref bg, ref GreenLabel);
         }
 
         private void GreenCheck_Unchecked(object sender, RoutedEventArgs e)
         {
-            bg.Color = Color.FromArgb(255, red, greenBuffer, blue);
-            Uncheck(ref greenBuffer, ref GreenSlider, ref bg);
+            Uncheck(ref greenBuffer, ref green, ref GreenSlider, ref bg, ref GreenLabel);
         }
 
         private void BlueCheck_Checked(object sender, RoutedEventArgs e)
         {
-
-            bg.Color = Color.FromArgb(255, red, green, 0);
-            ClearValue(ref blue, ref blueBuffer, ref BlueSlider, ref bg);
+            ClearValue(ref blueBuffer, ref blue, ref BlueSlider, ref bg, ref BlueLabel);
         }
         private void BlueCheck_Unchecked(object sender, RoutedEventArgs e)
         {
-            bg.Color = Color.FromArgb(255, red, green, blueBuffer);
-            Uncheck(ref blueBuffer, ref BlueSlider, ref bg);
+            Uncheck(ref blueBuffer, ref blue, ref BlueSlider, ref bg, ref BlueLabel);
         }
+
+        //*********************************************************
 
         private void RedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -107,5 +69,42 @@ namespace RGB
         {
             ChangeValue(ref sender, ref BlueLabel, ref blue);
         }
+
+        //*********************************************************
+
+        private void ClearValue(ref byte buffer, ref byte color, ref Slider slider, ref SolidColorBrush bg, ref Label label)
+        {
+            buffer = color;
+            color = 0;
+            bg.Color = Color.FromArgb(255, red, green, blue);
+            slider.Value = 0;
+            ColorButton.Background = bg;
+            slider.IsEnabled = false;
+            label.Content = label.Name.Substring(0, label.Name.Length - 5) + ": 0";
+        }
+
+        private void Uncheck(ref byte buffer, ref byte color, ref Slider slider, ref SolidColorBrush bg, ref Label label)
+        {
+            slider.IsEnabled = true;
+            slider.Value = buffer;
+            color = buffer;
+            bg.Color = Color.FromArgb(255, red, green, blue);
+            ColorButton.Background = bg;
+            label.Content = label.Name.Substring(0, label.Name.Length - 5) + ": " + redBuffer;
+        }
+
+        private void ChangeValue(ref object sender, ref Label label, ref byte color)
+        {
+            int N = (int)((Slider)sender).Value;
+            label.Content = label.Name.Substring(0, label.Name.Length - 5) + ": " + N;
+            color = (byte)N;
+            bg.Color = Color.FromArgb(255, red, green, blue);
+            ColorButton.Background = bg;
+        }
+
+        //*********************************************************
+
+        private byte red, green, blue, redBuffer, greenBuffer, blueBuffer;
+        private SolidColorBrush bg = new SolidColorBrush();
     }
 }
