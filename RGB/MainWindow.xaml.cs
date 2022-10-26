@@ -90,7 +90,7 @@ namespace RGB
             color = buffer;
             bg.Color = Color.FromArgb(255, red, green, blue);
             ColorButton.Background = bg;
-            label.Content = label.Name.Substring(0, label.Name.Length - 5) + ": " + redBuffer;
+            label.Content = label.Name.Substring(0, label.Name.Length - 5) + ": " + buffer;
         }
 
         private void ChangeValue(ref object sender, ref Label label, ref byte color)
