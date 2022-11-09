@@ -61,10 +61,15 @@ namespace Tic_Tac_Toe
         {
             for (int i = 0; i < 8; i++)
             {
-                if ((string)buttons[winningCombinations[i][0]].Content == currentTurn && 
+                if ((string)buttons[winningCombinations[i][0]].Content == currentTurn &&
                     (string)buttons[winningCombinations[i][1]].Content == currentTurn &&
                     (string)buttons[winningCombinations[i][2]].Content == currentTurn)
                 {
+                    SolidColorBrush bg = new SolidColorBrush();
+                    bg.Color = Color.FromArgb(255, 43, 210, 247);
+                    buttons[winningCombinations[i][0]].Background = bg;
+                    buttons[winningCombinations[i][1]].Background = bg;
+                    buttons[winningCombinations[i][2]].Background = bg;
                     gameOver = true;
                     TurnTextBlock.Text = currentTurn + " wygral!";
                 }
@@ -83,12 +88,15 @@ namespace Tic_Tac_Toe
         private void Restart()
         {
             moves = 0;
+            SolidColorBrush bg = new SolidColorBrush();
+            bg.Color = Color.FromArgb(255, 156, 249, 236);
+            gameOver = false;
+            circleTurn = true;
+            TurnTextBlock.Text = "Kolej: O | Ilosc ruchow: 0";
             for (int i = 0; i < 9; i++)
             {
-                TurnTextBlock.Text = "Kolej: O | Ilosc ruchow: 0";
                 buttons[i].Content = null;
-                gameOver = false;
-                circleTurn = true;
+                buttons[i].Background = bg;
             }
         }
 
@@ -139,20 +147,20 @@ namespace Tic_Tac_Toe
 
         private void Btn7Click(object sender, RoutedEventArgs e)
         {
-            
+
             FunctionInit(Btn7);
         }
 
         private void Btn8Click(object sender, RoutedEventArgs e)
         {
-            
+
             FunctionInit(Btn8);
         }
         private void BtnRestartClick(object sender, RoutedEventArgs e)
         {
             Restart();
         }
-        
+
         private Button[] buttons = new Button[9];
 
         private bool circleTurn = true;
