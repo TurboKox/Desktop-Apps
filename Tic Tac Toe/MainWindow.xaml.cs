@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Tic_Tac_Toe
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -43,23 +40,59 @@ namespace Tic_Tac_Toe
 
         private void PlaceMark(Button btn, string currentTurn)
         {
-            if (!gameOver)
+            if (!playWithBot)
             {
-                if (btn.Content == null)
+                if (!gameOver)
                 {
-                    btn.Content = currentTurn;
+                    if (btn.Content == null)
+                    {
+                        moves++;
+                        btn.Content = currentTurn;
+                        SwapTurns();
+                        CheckWin(currentTurn);
+                    }
                 }
-                else
+            }
+            else
+            {
+                if (!gameOver && circleTurn)
                 {
-                    SwapTurns();
-                    moves--;
+                    if (btn.Content == null)
+                    {
+                        moves++;
+                        btn.Content = currentTurn;
+                        SwapTurns();
+                        CheckWin(currentTurn);
+                        AIPlaceMark();
+                    }
                 }
+            }
+        }
+
+        private async void AIPlaceMark()
+        {
+            circleTurn = false;
+            int ms = 300;
+            await Task.Delay(ms);
+            if (moves < 8 && !gameOver && playWithBot && !circleTurn)
+            {
+                Random randomGenerator = new Random();
+                int randomNumber;
+                do
+                {
+                    randomNumber = randomGenerator.Next(0, 8);
+                }
+                while (buttons[randomNumber].Content != null);
+                buttons[randomNumber].Content = "X";
+                moves++;
+                CheckWin("X");
+                SwapTurns();
             }
         }
 
         private void CheckWin(string currentTurn)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < winningCombinations.Length; i++)
             {
                 if ((string)buttons[winningCombinations[i][0]].Content == currentTurn &&
                     (string)buttons[winningCombinations[i][1]].Content == currentTurn &&
@@ -78,7 +111,13 @@ namespace Tic_Tac_Toe
 
         private void CheckDraw()
         {
-            if (moves == 9 && !gameOver)
+            bool hasMark = true;
+            for (int i = 0; i < 9; i++)
+            {
+                if (buttons[i].Content == null)
+                    hasMark = false;
+            }
+            if (hasMark && !gameOver)
             {
                 gameOver = true;
                 TurnTextBlock.Text = "Remis!";
@@ -104,10 +143,7 @@ namespace Tic_Tac_Toe
         {
             string currentTurn = circleTurn ? "O" : "X";
             PlaceMark(btn, currentTurn);
-            CheckWin(currentTurn);
-            moves++;
             CheckDraw();
-            SwapTurns();
         }
 
         private void Btn0Click(object sender, RoutedEventArgs e)
@@ -160,12 +196,28 @@ namespace Tic_Tac_Toe
         {
             Restart();
         }
+        private void BtnChoice_Click(object sender, RoutedEventArgs e)
+        {
+            Restart();
+            playWithBot = !playWithBot;
+            Button btn = (Button)sender;
+            if (playWithBot)
+            {
+                btn.Content = "Graj we 2";
+            }
+            else
+            {
+
+                btn.Content = "Graj z botem";
+            }
+        }
 
         private Button[] buttons = new Button[9];
 
         private bool circleTurn = true;
         private int moves = 0;
         private bool gameOver = false;
+        private bool playWithBot = false;
 
         private int[][] winningCombinations = {
                 new int[] { 0, 1, 2 },
@@ -177,5 +229,6 @@ namespace Tic_Tac_Toe
                 new int[] { 0, 4, 8 },
                 new int[] { 2, 4, 6 }
         };
+
     }
 }
