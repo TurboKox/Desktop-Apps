@@ -98,6 +98,7 @@ namespace Tic_Tac_Toe
                     buttons[winningCombinations[i][2]].Background = bg;
                     gameOver = true;
                     TurnTextBlock.Text = currentTurn + " wygral!";
+                    break;
                 }
             }
         }
