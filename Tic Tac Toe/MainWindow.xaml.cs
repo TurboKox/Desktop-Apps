@@ -78,8 +78,8 @@ namespace Tic_Tac_Toe
                 while (buttons[randomNumber].Content != null);
                 buttons[randomNumber].Content = "X";
                 moves++;
-                CheckWin("X");
                 SwapTurns();
+                CheckWin("X");
             }
         }
 
@@ -96,8 +96,8 @@ namespace Tic_Tac_Toe
                     buttons[winningCombinations[i][0]].Background = bg;
                     buttons[winningCombinations[i][1]].Background = bg;
                     buttons[winningCombinations[i][2]].Background = bg;
-                    gameOver = true;
                     TurnTextBlock.Text = currentTurn + " wygral!";
+                    gameOver = true;
                     break;
                 }
             }
