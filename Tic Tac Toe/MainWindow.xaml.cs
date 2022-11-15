@@ -34,37 +34,30 @@ namespace Tic_Tac_Toe
         private void SwapTurns()
         {
             circleTurn = !circleTurn;
-            if (!gameOver)
-                TurnTextBlock.Text = circleTurn ? "Kolej: O | Ilosc ruchow: " + moves : "Kolej: X | Ilosc ruchow: " + moves;
+            TurnTextBlock.Text = circleTurn ? "Kolej: O | Ilosc ruchow: " + moves : "Kolej: X | Ilosc ruchow: " + moves;
         }
 
         private void PlaceMark(Button btn, string currentTurn)
         {
-            if (!playWithBot)
+            if (playWithBot)
             {
-                if (!gameOver)
+                if (!gameOver && circleTurn && btn.Content == null)
                 {
-                    if (btn.Content == null)
-                    {
-                        moves++;
-                        btn.Content = currentTurn;
-                        SwapTurns();
-                        CheckWin(currentTurn);
-                    }
+                    moves++;
+                    btn.Content = currentTurn;
+                    SwapTurns();
+                    CheckWin(currentTurn);
+                    AIPlaceMark();
                 }
             }
             else
             {
-                if (!gameOver && circleTurn)
+                if (!gameOver && btn.Content == null)
                 {
-                    if (btn.Content == null)
-                    {
-                        moves++;
-                        btn.Content = currentTurn;
-                        SwapTurns();
-                        CheckWin(currentTurn);
-                        AIPlaceMark();
-                    }
+                    moves++;
+                    btn.Content = currentTurn;
+                    SwapTurns();
+                    CheckWin(currentTurn);
                 }
             }
         }
@@ -74,7 +67,7 @@ namespace Tic_Tac_Toe
             circleTurn = false;
             int ms = 300;
             await Task.Delay(ms);
-            if (moves < 8 && !gameOver && playWithBot && !circleTurn)
+            if (moves < 8 && !gameOver)
             {
                 Random randomGenerator = new Random();
                 int randomNumber;
@@ -117,6 +110,7 @@ namespace Tic_Tac_Toe
                 if (buttons[i].Content == null)
                     hasMark = false;
             }
+
             if (hasMark && !gameOver)
             {
                 gameOver = true;
@@ -202,14 +196,9 @@ namespace Tic_Tac_Toe
             playWithBot = !playWithBot;
             Button btn = (Button)sender;
             if (playWithBot)
-            {
                 btn.Content = "Graj we 2";
-            }
             else
-            {
-
                 btn.Content = "Graj z botem";
-            }
         }
 
         private Button[] buttons = new Button[9];
